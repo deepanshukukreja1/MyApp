@@ -1,0 +1,23 @@
+pipeline {
+    agent any 
+    stages {
+        stage('clone Repo') { 
+            steps {
+		sh "rm -rf MyApp"
+                sh "git clone https://github.com/deepanshukukreja1/MyApp.git"
+                sh "mvn clean -f MyApp/my-app"
+            }
+        }
+        stage('test') { 
+            steps {
+                sh "mvn test -f MyApp/my-app"
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                sh "mvn package -f MyApp/my-app"
+                
+            }
+        }
+    }
+}
